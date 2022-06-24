@@ -53,7 +53,7 @@ pub fn export_impl(input: TokenStream) -> TokenStream {
 
         path.segments.pop();
 
-        funcs.push(quote!(#path#identifier));
+        funcs.push(quote!(#path #identifier));
     }
 
     quote!(

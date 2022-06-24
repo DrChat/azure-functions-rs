@@ -4,7 +4,7 @@
 #![deny(unused_extern_crates)]
 #![recursion_limit = "128"]
 #![cfg_attr(feature = "unstable", feature(proc_macro_diagnostic))]
-extern crate proc_macro;
+use proc_macro;
 
 mod binding;
 

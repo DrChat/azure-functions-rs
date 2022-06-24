@@ -4,7 +4,7 @@
 #![recursion_limit = "128"]
 #![deny(unused_extern_crates)]
 #![cfg_attr(feature = "unstable", feature(proc_macro_diagnostic))]
-extern crate proc_macro;
+use proc_macro;
 
 mod export;
 mod func;

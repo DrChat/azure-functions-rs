@@ -157,7 +157,7 @@ impl ToTokens for CommonInvokerTokens<'_> {
                         )
                     ),
                     #(#arg_names => #args_for_match = Some(#arg_assignments),)*
-                    _ => panic!(format!("unexpected parameter binding '{}'", __param.name)),
+                    _ => panic!("unexpected parameter binding '{}'", __param.name),
                 };
             }
 
