@@ -11,7 +11,7 @@ pub struct ServiceBus<'a> {
 }
 
 impl<'a> ServiceBus<'a> {
-    pub fn create_subcommand<'b>() -> App<'a, 'b> {
+    pub fn create_subcommand() -> App<'static> {
         SubCommand::with_name("service-bus")
             .about("Creates a new Service Bus triggered Azure Function.")
             .arg(
@@ -24,14 +24,14 @@ impl<'a> ServiceBus<'a> {
             .arg(
                 Arg::with_name("name")
                     .long("name")
-                    .short("n")
+                    .short('n')
                     .value_name("NAME")
                     .help("The name of the new Azure Function. You may specify this as <NAME> instead (i.e., without typing --name).")
             )
             .arg(
                 Arg::with_name("connection")
                     .long("connection")
-                    .short("c")
+                    .short('c')
                     .value_name("CONNECTION")
                     .help("The name of the connection setting to use for the Service Bus trigger.")
                     .required(true),
@@ -39,7 +39,7 @@ impl<'a> ServiceBus<'a> {
             .arg(
                 Arg::with_name("queue")
                     .long("queue")
-                    .short("q")
+                    .short('q')
                     .value_name("QUEUE")
                     .help("The name of the queue to use for the Service Bus trigger.")
                     .conflicts_with_all(&["topic", "subscription"])
@@ -48,7 +48,7 @@ impl<'a> ServiceBus<'a> {
             .arg(
                 Arg::with_name("topic")
                     .long("topic")
-                    .short("t")
+                    .short('t')
                     .value_name("TOPIC")
                     .help("The name of the topic to use for the Service Bus trigger.")
                     .conflicts_with("queue")
@@ -57,7 +57,7 @@ impl<'a> ServiceBus<'a> {
             .arg(
                 Arg::with_name("subscription")
                     .long("subscription")
-                    .short("s")
+                    .short('s')
                     .value_name("SUBSCRIPTION")
                     .help("The name of the subscription to use for the Service Bus trigger.")
                     .conflicts_with("queue")
@@ -78,8 +78,8 @@ impl<'a> ServiceBus<'a> {
     }
 }
 
-impl<'a> From<&'a ArgMatches<'a>> for ServiceBus<'a> {
-    fn from(args: &'a ArgMatches<'a>) -> Self {
+impl<'a> From<&'a ArgMatches> for ServiceBus<'a> {
+    fn from(args: &'a ArgMatches) -> Self {
         ServiceBus {
             name: args
                 .value_of("positional-name")

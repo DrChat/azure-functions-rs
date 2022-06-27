@@ -9,7 +9,7 @@ pub struct Queue<'a> {
 }
 
 impl<'a> Queue<'a> {
-    pub fn create_subcommand<'b>() -> App<'a, 'b> {
+    pub fn create_subcommand() -> App<'static> {
         SubCommand::with_name("queue")
             .about("Creates a new queue triggered Azure Function.")
             .arg(
@@ -22,14 +22,14 @@ impl<'a> Queue<'a> {
             .arg(
                 Arg::with_name("name")
                     .long("name")
-                    .short("n")
+                    .short('n')
                     .value_name("NAME")
                     .help("The name of the new Azure Function. You may specify this as <NAME> instead (i.e., without typing --name).")
             )
             .arg(
                 Arg::with_name("queue_name")
                     .long("queue-name")
-                    .short("q")
+                    .short('q')
                     .value_name("QUEUE")
                     .help("The name of the storage queue to monitor.")
                     .required(true),
@@ -73,8 +73,8 @@ impl<'a> Queue<'a> {
     }
 }
 
-impl<'a> From<&'a ArgMatches<'a>> for Queue<'a> {
-    fn from(args: &'a ArgMatches<'a>) -> Self {
+impl<'a> From<&'a ArgMatches> for Queue<'a> {
+    fn from(args: &'a ArgMatches) -> Self {
         Queue {
             name: args
                 .value_of("positional-name")

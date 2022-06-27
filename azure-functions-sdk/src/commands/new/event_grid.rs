@@ -7,7 +7,7 @@ pub struct EventGrid<'a> {
 }
 
 impl<'a> EventGrid<'a> {
-    pub fn create_subcommand<'b>() -> App<'a, 'b> {
+    pub fn create_subcommand() -> App<'static> {
         SubCommand::with_name("event-grid")
             .about("Creates a new Event Grid triggered Azure Function.")
             .arg(
@@ -20,7 +20,7 @@ impl<'a> EventGrid<'a> {
             .arg(
                 Arg::with_name("name")
                     .long("name")
-                    .short("n")
+                    .short('n')
                     .value_name("NAME")
                     .help("The name of the new Azure Function. You may specify this as <NAME> instead (i.e., without typing --name).")
             )
@@ -35,8 +35,8 @@ impl<'a> EventGrid<'a> {
     }
 }
 
-impl<'a> From<&'a ArgMatches<'a>> for EventGrid<'a> {
-    fn from(args: &'a ArgMatches<'a>) -> Self {
+impl<'a> From<&'a ArgMatches> for EventGrid<'a> {
+    fn from(args: &'a ArgMatches) -> Self {
         EventGrid {
             name: args
                 .value_of("positional-name")

@@ -8,7 +8,7 @@ pub struct Blob<'a> {
 }
 
 impl<'a> Blob<'a> {
-    pub fn create_subcommand<'b>() -> App<'a, 'b> {
+    pub fn create_subcommand() -> App<'static> {
         SubCommand::with_name("blob")
             .about("Creates a new blob triggered Azure Function.")
             .arg(
@@ -21,14 +21,14 @@ impl<'a> Blob<'a> {
             .arg(
                 Arg::with_name("name")
                     .long("name")
-                    .short("n")
+                    .short('n')
                     .value_name("NAME")
                     .help("The name of the new Azure Function. You may specify this as <NAME> instead (i.e., without typing --name).")
             )
             .arg(
                 Arg::with_name("path")
                     .long("path")
-                    .short("p")
+                    .short('p')
                     .value_name("PATH")
                     .help("The blob storage path to monitor.")
                     .required(true),
@@ -45,8 +45,8 @@ impl<'a> Blob<'a> {
     }
 }
 
-impl<'a> From<&'a ArgMatches<'a>> for Blob<'a> {
-    fn from(args: &'a ArgMatches<'a>) -> Self {
+impl<'a> From<&'a ArgMatches> for Blob<'a> {
+    fn from(args: &'a ArgMatches) -> Self {
         Blob {
             name: args
                 .value_of("positional-name")

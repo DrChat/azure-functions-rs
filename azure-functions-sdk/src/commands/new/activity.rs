@@ -7,7 +7,7 @@ pub struct Activity<'a> {
 }
 
 impl<'a> Activity<'a> {
-    pub fn create_subcommand<'b>() -> App<'a, 'b> {
+    pub fn create_subcommand() -> App<'static> {
         SubCommand::with_name("activity")
             .about("Creates a new Activity Function for Durable Functions.")
             .arg(
@@ -20,7 +20,7 @@ impl<'a> Activity<'a> {
             .arg(
                 Arg::with_name("name")
                     .long("name")
-                    .short("n")
+                    .short('n')
                     .value_name("NAME")
                     .help("The name of the new Azure Function. You may specify this as <NAME> instead (i.e., without typing --name).")
             )
@@ -35,8 +35,8 @@ impl<'a> Activity<'a> {
     }
 }
 
-impl<'a> From<&'a ArgMatches<'a>> for Activity<'a> {
-    fn from(args: &'a ArgMatches<'a>) -> Self {
+impl<'a> From<&'a ArgMatches> for Activity<'a> {
+    fn from(args: &'a ArgMatches) -> Self {
         Activity {
             name: args
                 .value_of("positional-name")

@@ -57,8 +57,8 @@ impl<'a> Run<'a> {
     }
 }
 
-impl<'a> From<&'a ArgMatches<'a>> for Run<'a> {
-    fn from(args: &'a ArgMatches<'a>) -> Self {
+impl<'a> From<&'a ArgMatches> for Run<'a> {
+    fn from(args: &'a ArgMatches) -> Self {
         Run {
             host: args.value_of("host").expect("A host is required."),
             port: args

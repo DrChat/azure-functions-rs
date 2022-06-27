@@ -2,7 +2,7 @@ use crate::endpoint::Endpoint;
 use crate::error::ClientError;
 use crate::Result;
 use chrono::{DateTime, Utc};
-use futures::TryStreamExt;
+use futures_util::{stream::TryStreamExt, StreamExt};
 use hyper::{self, Body, Request, StatusCode};
 use serde::{Deserialize, Serialize};
 use serde_json::{from_slice, to_string, Value};

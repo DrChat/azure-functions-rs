@@ -32,7 +32,7 @@ impl SyncExtensions {
             .arg(
                 Arg::with_name("verbose")
                     .long("verbose")
-                    .short("v")
+                    .short('v')
                     .help("Use verbose output."),
             )
     }
@@ -206,8 +206,8 @@ impl SyncExtensions {
     }
 }
 
-impl<'a> From<&ArgMatches<'a>> for SyncExtensions {
-    fn from(args: &ArgMatches<'a>) -> Self {
+impl<'a> From<&ArgMatches> for SyncExtensions {
+    fn from(args: &ArgMatches) -> Self {
         SyncExtensions {
             script_root: current_dir()
                 .expect("failed to get current directory")

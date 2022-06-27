@@ -55,7 +55,7 @@ impl<'a> Init<'a> {
                 .arg(
                     Arg::with_name("sync_extensions")
                         .long("sync-extensions")
-                        .short("s")
+                        .short('s')
                         .help("Synchronize the Azure Function binding extensions.")
                 )
                 .arg(
@@ -66,7 +66,7 @@ impl<'a> Init<'a> {
                 .arg(
                     Arg::with_name("verbose")
                         .long("verbose")
-                        .short("v")
+                        .short('v')
                         .help("Use verbose output.")
                 )
     }
@@ -527,8 +527,8 @@ impl<'a> Init<'a> {
     }
 }
 
-impl<'a> From<&'a ArgMatches<'a>> for Init<'a> {
-    fn from(args: &'a ArgMatches<'a>) -> Self {
+impl<'a> From<&'a ArgMatches> for Init<'a> {
+    fn from(args: &'a ArgMatches) -> Self {
         Init {
             script_root: current_dir()
                 .expect("failed to get current directory")

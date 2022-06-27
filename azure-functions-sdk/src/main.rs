@@ -61,13 +61,12 @@ use std::{env, process};
 
 use crate::commands::{New, NewApp, Run};
 
-fn create_app<'a, 'b>() -> App<'a, 'b> {
+fn create_app() -> App<'static> {
     App::new("Azure Functions for Rust")
         .bin_name("cargo func")
         .version(env!("CARGO_PKG_VERSION"))
         .about("Azure Functions for Rust Developer Tools")
         .setting(AppSettings::SubcommandRequiredElseHelp)
-        .setting(AppSettings::VersionlessSubcommands)
         .setting(AppSettings::NoBinaryName)
         .subcommand(NewApp::create_subcommand())
         .subcommand(Run::create_subcommand())
@@ -93,9 +92,9 @@ fn main() {
         .get_or_insert_with(|| create_app().get_matches_from(env::args().skip(1)))
         .subcommand()
     {
-        ("new-app", Some(args)) => NewApp::from(args).execute(),
-        ("run", Some(args)) => Run::from(args).execute(),
-        ("new", Some(args)) => New::from(args).execute(),
+        Some(("new-app", args)) => NewApp::from(args).execute(),
+        Some(("run", args)) => Run::from(args).execute(),
+        Some(("new", args)) => New::from(args).execute(),
         _ => panic!("expected a subcommand."),
     } {
         print_error_and_exit(&e);

@@ -8,7 +8,7 @@ pub struct Http<'a> {
 }
 
 impl<'a> Http<'a> {
-    pub fn create_subcommand<'b>() -> App<'a, 'b> {
+    pub fn create_subcommand() -> App<'static> {
         SubCommand::with_name("http")
             .about("Creates a new HTTP triggered Azure Function.")
             .arg(
@@ -21,7 +21,7 @@ impl<'a> Http<'a> {
             .arg(
                 Arg::with_name("name")
                     .long("name")
-                    .short("n")
+                    .short('n')
                     .value_name("NAME")
                     .help("The name of the new Azure Function. You may specify this as <NAME> instead (i.e., without typing --name).")
             )
@@ -44,8 +44,8 @@ impl<'a> Http<'a> {
     }
 }
 
-impl<'a> From<&'a ArgMatches<'a>> for Http<'a> {
-    fn from(args: &'a ArgMatches<'a>) -> Self {
+impl<'a> From<&'a ArgMatches> for Http<'a> {
+    fn from(args: &'a ArgMatches) -> Self {
         Http {
             name: args
                 .value_of("positional-name")

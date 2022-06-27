@@ -18,7 +18,7 @@ pub struct Run<'a> {
 }
 
 impl<'a> Run<'a> {
-    pub fn create_subcommand<'b>() -> App<'a, 'b> {
+    pub fn create_subcommand() -> App<'a> {
         SubCommand::with_name("run")
             .setting(AppSettings::TrailingVarArg)
             .usage("cargo func run [FLAGS] [OPTIONS] -- [CARGO_OPTIONS]...")
@@ -26,7 +26,7 @@ impl<'a> Run<'a> {
             .arg(
                 Arg::with_name("quiet")
                     .long("quiet")
-                    .short("q")
+                    .short('q')
                     .help("No output printed to stdout."),
             )
             .arg(
@@ -40,14 +40,14 @@ impl<'a> Run<'a> {
             .arg(
                 Arg::with_name("port")
                     .long("port")
-                    .short("p")
+                    .short('p')
                     .value_name("PORT")
                     .help("The port to forward to the Azure Functions Host for HTTP requests. Default is 8080."),
             )
             .arg(
                 Arg::with_name("script_root")
                     .long("script-root")
-                    .short("r")
+                    .short('r')
                     .value_name("ROOT")
                     .help("The directory to use for the Azure Functions application script root. Default is a temporary directory."),
             )
@@ -192,8 +192,8 @@ impl<'a> Run<'a> {
     }
 }
 
-impl<'a> From<&'a ArgMatches<'a>> for Run<'a> {
-    fn from(args: &'a ArgMatches<'a>) -> Self {
+impl<'a> From<&'a ArgMatches> for Run<'a> {
+    fn from(args: &'a ArgMatches) -> Self {
         Run {
             quiet: args.is_present("quiet"),
             color: args.value_of("color"),

@@ -10,7 +10,7 @@ pub struct CosmosDb<'a> {
 }
 
 impl<'a> CosmosDb<'a> {
-    pub fn create_subcommand<'b>() -> App<'a, 'b> {
+    pub fn create_subcommand() -> App<'static> {
         SubCommand::with_name("cosmos-db")
             .about("Creates a new Cosmos DB triggered Azure Function.")
             .arg(
@@ -23,14 +23,14 @@ impl<'a> CosmosDb<'a> {
             .arg(
                 Arg::with_name("name")
                     .long("name")
-                    .short("n")
+                    .short('n')
                     .value_name("NAME")
                     .help("The name of the new Azure Function. You may specify this as <NAME> instead (i.e., without typing --name).")
             )
             .arg(
                 Arg::with_name("connection")
                     .long("connection")
-                    .short("c")
+                    .short('c')
                     .value_name("CONNECTION")
                     .help("The name of the connection setting to use for the Cosmos DB trigger.")
                     .required(true),
@@ -38,7 +38,7 @@ impl<'a> CosmosDb<'a> {
             .arg(
                 Arg::with_name("database")
                     .long("database")
-                    .short("d")
+                    .short('d')
                     .value_name("DATABASE")
                     .help("The name of the database to use for the Cosmos DB trigger.")
                     .required(true),
@@ -46,7 +46,7 @@ impl<'a> CosmosDb<'a> {
             .arg(
                 Arg::with_name("collection")
                     .long("collection")
-                    .short("l")
+                    .short('l')
                     .value_name("COLLECTION")
                     .help("The name of the collection to use for the Cosmos DB trigger.")
                     .required(true),
@@ -65,8 +65,8 @@ impl<'a> CosmosDb<'a> {
     }
 }
 
-impl<'a> From<&'a ArgMatches<'a>> for CosmosDb<'a> {
-    fn from(args: &'a ArgMatches<'a>) -> Self {
+impl<'a> From<&'a ArgMatches> for CosmosDb<'a> {
+    fn from(args: &'a ArgMatches) -> Self {
         CosmosDb {
             name: args
                 .value_of("positional-name")

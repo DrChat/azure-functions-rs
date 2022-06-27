@@ -9,7 +9,7 @@ pub struct EventHub<'a> {
 }
 
 impl<'a> EventHub<'a> {
-    pub fn create_subcommand<'b>() -> App<'a, 'b> {
+    pub fn create_subcommand() -> App<'static> {
         SubCommand::with_name("event-hub")
             .about("Creates a new Event Hub triggered Azure Function.")
             .arg(
@@ -22,14 +22,14 @@ impl<'a> EventHub<'a> {
             .arg(
                 Arg::with_name("name")
                     .long("name")
-                    .short("n")
+                    .short('n')
                     .value_name("NAME")
                     .help("The name of the new Azure Function. You may specify this as <NAME> instead (i.e., without typing --name).")
             )
             .arg(
                 Arg::with_name("connection")
                     .long("connection")
-                    .short("c")
+                    .short('c')
                     .value_name("CONNECTION")
                     .help("The name of the connection setting to use for the Event Hub trigger.")
                     .required(true),
@@ -37,7 +37,7 @@ impl<'a> EventHub<'a> {
             .arg(
                 Arg::with_name("hub_name")
                     .long("hub-name")
-                    .short("h")
+                    .short('h')
                     .value_name("HUBNAME")
                     .help("The name of the Event Hub."),
             )
@@ -54,8 +54,8 @@ impl<'a> EventHub<'a> {
     }
 }
 
-impl<'a> From<&'a ArgMatches<'a>> for EventHub<'a> {
-    fn from(args: &'a ArgMatches<'a>) -> Self {
+impl<'a> From<&'a ArgMatches> for EventHub<'a> {
+    fn from(args: &'a ArgMatches) -> Self {
         EventHub {
             name: args
                 .value_of("positional-name")

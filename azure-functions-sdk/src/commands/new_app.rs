@@ -25,7 +25,7 @@ pub struct NewApp<'a> {
 }
 
 impl<'a> NewApp<'a> {
-    pub fn create_subcommand<'b>() -> App<'a, 'b> {
+    pub fn create_subcommand() -> App<'a> {
         SubCommand::with_name("new-app")
             .about("Creates a new Azure Functions application at the specified path.")
             .arg(
@@ -41,20 +41,20 @@ impl<'a> NewApp<'a> {
             .arg(
                 Arg::with_name("name")
                     .long("name")
-                    .short("n")
+                    .short('n')
                     .value_name("NAME")
                     .help("Set the resulting package name, defaults to the directory name."),
             )
             .arg(
                 Arg::with_name("verbose")
                     .long("verbose")
-                    .short("v")
+                    .short('v')
                     .help("Use verbose output."),
             )
             .arg(
                 Arg::with_name("quiet")
                     .long("quiet")
-                    .short("q")
+                    .short('q')
                     .help("No output printed to stdout.")
                     .conflicts_with("verbose"),
             )
@@ -265,8 +265,8 @@ impl<'a> NewApp<'a> {
     }
 }
 
-impl<'a> From<&'a ArgMatches<'a>> for NewApp<'a> {
-    fn from(args: &'a ArgMatches<'a>) -> Self {
+impl<'a> From<&'a ArgMatches> for NewApp<'a> {
+    fn from(args: &'a ArgMatches) -> Self {
         NewApp {
             path: args.value_of("path").unwrap(),
             vcs: args.value_of("vcs"),

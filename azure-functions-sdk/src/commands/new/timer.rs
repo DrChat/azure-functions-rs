@@ -8,7 +8,7 @@ pub struct Timer<'a> {
 }
 
 impl<'a> Timer<'a> {
-    pub fn create_subcommand<'b>() -> App<'a, 'b> {
+    pub fn create_subcommand() -> App<'static> {
         SubCommand::with_name("timer")
             .about("Creates a new timer triggered Azure Function.")
             .arg(
@@ -21,14 +21,14 @@ impl<'a> Timer<'a> {
             .arg(
                 Arg::with_name("name")
                     .long("name")
-                    .short("n")
+                    .short('n')
                     .value_name("NAME")
                     .help("The name of the new Azure Function. You may specify this as <NAME> instead (i.e., without typing --name).")
             )
             .arg(
                 Arg::with_name("schedule")
                     .long("schedule")
-                    .short("s")
+                    .short('s')
                     .value_name("SCHEDULE")
                     .help("The timer schedule as a cron-expression.")
                     .required(true),
@@ -45,8 +45,8 @@ impl<'a> Timer<'a> {
     }
 }
 
-impl<'a> From<&'a ArgMatches<'a>> for Timer<'a> {
-    fn from(args: &'a ArgMatches<'a>) -> Self {
+impl<'a> From<&'a ArgMatches> for Timer<'a> {
+    fn from(args: &'a ArgMatches) -> Self {
         Timer {
             name: args
                 .value_of("positional-name")

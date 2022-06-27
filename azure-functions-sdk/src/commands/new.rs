@@ -183,18 +183,18 @@ fn export_function(name: &str) -> Result<(), String> {
 pub struct New<'a> {
     quiet: bool,
     color: Option<&'a str>,
-    args: &'a ArgMatches<'a>,
+    args: &'a ArgMatches,
 }
 
 impl<'a> New<'a> {
-    pub fn create_subcommand<'b>() -> App<'a, 'b> {
+    pub fn create_subcommand() -> App<'static> {
         SubCommand::with_name("new")
             .about("Creates a new Azure Function from a template.")
             .setting(AppSettings::SubcommandRequiredElseHelp)
             .arg(
                 Arg::with_name("quiet")
                     .long("quiet")
-                    .short("q")
+                    .short('q')
                     .help("No output printed to stdout."),
             )
             .arg(
@@ -230,23 +230,23 @@ impl<'a> New<'a> {
         self.set_colorization();
 
         match self.args.subcommand() {
-            ("blob", Some(args)) => Blob::from(args).execute(self.quiet),
-            ("http", Some(args)) => Http::from(args).execute(self.quiet),
-            ("queue", Some(args)) => Queue::from(args).execute(self.quiet),
-            ("timer", Some(args)) => Timer::from(args).execute(self.quiet),
-            ("event-grid", Some(args)) => EventGrid::from(args).execute(self.quiet),
-            ("event-hub", Some(args)) => EventHub::from(args).execute(self.quiet),
-            ("cosmos-db", Some(args)) => CosmosDb::from(args).execute(self.quiet),
-            ("service-bus", Some(args)) => ServiceBus::from(args).execute(self.quiet),
-            ("activity", Some(args)) => Activity::from(args).execute(self.quiet),
-            ("orchestration", Some(args)) => Orchestration::from(args).execute(self.quiet),
+            Some(("blob", args)) => Blob::from(args).execute(self.quiet),
+            Some(("http", args)) => Http::from(args).execute(self.quiet),
+            Some(("queue", args)) => Queue::from(args).execute(self.quiet),
+            Some(("timer", args)) => Timer::from(args).execute(self.quiet),
+            Some(("event-grid", args)) => EventGrid::from(args).execute(self.quiet),
+            Some(("event-hub", args)) => EventHub::from(args).execute(self.quiet),
+            Some(("cosmos-db", args)) => CosmosDb::from(args).execute(self.quiet),
+            Some(("service-bus", args)) => ServiceBus::from(args).execute(self.quiet),
+            Some(("activity", args)) => Activity::from(args).execute(self.quiet),
+            Some(("orchestration", args)) => Orchestration::from(args).execute(self.quiet),
             _ => panic!("expected a subcommand for the 'new' command."),
         }
     }
 }
 
-impl<'a> From<&'a ArgMatches<'a>> for New<'a> {
-    fn from(args: &'a ArgMatches<'a>) -> Self {
+impl<'a> From<&'a ArgMatches> for New<'a> {
+    fn from(args: &'a ArgMatches) -> Self {
         New {
             quiet: args.is_present("quiet"),
             color: args.value_of("color"),
